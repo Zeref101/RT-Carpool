@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script type="text/javascript">
+      var stompClient = null;
+
+      function connect() {
+        var socket = new SockJS("/websocket-chat");
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+          console.log("Connected: " + frame);
+          stompClient.subscribe("/topic/messages", function (messageOutput) {
+            showMessage(JSON.parse(messageOutput.body).content);
+          });
+        });
+      }
+
+      function sendMessage() {
+        var messageContent = document.getElementById("message").value;
+        stompClient.send(
+          "/app/message",
+          {},
+          JSON.stringify({ content: messageContent })
+        );
+      }
+
+      function showMessage(message) {
+        var response = document.getElementById("response");
+        var p = document.createElement("p");
+        p.style.wordWrap = "break-word";
+        p.appendChild(document.createTextNode(message));
+        response.appendChild(p);
+      }
+    </script>
+  </head>
+  <body onload="connect()">
+    <input type="text" id="message" />
+    <button onclick="sendMessage()">Send</button>
+    <div id="response"></div>
+  </body>
+</html>
