@@ -1,9 +1,22 @@
 package com.example.carpool.model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class ChatMessage {
     private String content;
     private String sender;
+    private String groupId;
     private String timestamp;
+
+    public ChatMessage() {
+        this.timestamp = getCurrentTimestamp();
+    }
+
+    private String getCurrentTimestamp() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.now().format(formatter);
+    }
 
     public String getSender() {
         return sender;
@@ -11,6 +24,14 @@ public class ChatMessage {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public String getContent() {
