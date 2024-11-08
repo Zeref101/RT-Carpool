@@ -25,7 +25,8 @@
         var message = {
           content: document.getElementById("message").value,
           sender: "22BCE1335",
-          groupId: "1",
+          groupId: "bf70958a-d018-4c56-ba57-3b93f11e6c0c",
+          timestamp: new Date().toISOString(),
         };
         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(message));
       }
@@ -39,7 +40,7 @@
       }
     </script>
   </head>
-  <body onload="connect('1')">
+  <body onload="connect('bf70958a-d018-4c56-ba57-3b93f11e6c0c')">
     <input type="text" id="message" />
     <button onclick="sendMessage()">Send</button>
     <div id="response"></div>
