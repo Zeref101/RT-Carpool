@@ -1,21 +1,43 @@
 package com.example.carpool.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "messages")
 public class ChatMessage {
-    private String content;
-    private String sender;
-    private String groupId;
-    private String timestamp;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "UUID", name = "messageid")
+    private UUID messageId;
 
-    public ChatMessage() {
-        this.timestamp = getCurrentTimestamp();
+    @Column(name = "content", nullable = false)
+    private String content;
+
+    @Column(name = "senderid", nullable = false)
+    private String sender;
+
+    @Column(name = "groupid", nullable = false)
+    private UUID groupId;
+
+    @Column(name = "timestamp", nullable = false)
+    private LocalDateTime timestamp;
+
+    public UUID getMessageId() {
+        return messageId;
     }
 
-    private String getCurrentTimestamp() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.now().format(formatter);
+    public void setMessageId(UUID messageId) {
+        this.messageId = messageId;
     }
 
     public String getSender() {
@@ -26,11 +48,11 @@ public class ChatMessage {
         this.sender = sender;
     }
 
-    public String getGroupId() {
+    public UUID getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(String groupId) {
+    public void setGroupId(UUID groupId) {
         this.groupId = groupId;
     }
 
@@ -42,11 +64,11 @@ public class ChatMessage {
         this.content = content;
     }
 
-    public String getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 }
