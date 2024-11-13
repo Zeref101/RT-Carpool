@@ -3,8 +3,6 @@ package com.example.carpool.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +25,7 @@ public class ChatMessage {
     private String sender;
 
     @Column(name = "groupid", nullable = false)
-    private UUID groupId;
+    private Long groupId;
 
     @Column(name = "timestamp", nullable = false)
     private LocalDateTime timestamp;
@@ -48,11 +46,11 @@ public class ChatMessage {
         this.sender = sender;
     }
 
-    public UUID getGroupId() {
+    public Long getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(UUID groupId) {
+    public void setGroupId(Long groupId) {
         this.groupId = groupId;
     }
 
