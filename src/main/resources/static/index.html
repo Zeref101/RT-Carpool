@@ -8,10 +8,12 @@
       var stompClient = null;
 
       function connect(groupId) {
-        var socket = new SockJS("/websocket-chat");
+        var socket = new SockJS("http://localhost:8080/websocket-chat");
+        console.log("sockettttttttttttt", socket);
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
           console.log("Connected: " + frame);
+          console.log(groupId);
           stompClient.subscribe(
             `/topic/group.${groupId}`,
             function (messageOutput) {
@@ -25,7 +27,7 @@
         var message = {
           content: document.getElementById("message").value,
           sender: "22bce1335",
-          groupId: "31",
+          groupId: "92",
           timestamp: new Date().toISOString(),
         };
         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(message));
@@ -40,7 +42,7 @@
       }
     </script>
   </head>
-  <body onload="connect('31')">
+  <body onload="connect('92')">
     <input type="text" id="message" />
     <button onclick="sendMessage()">Send</button>
     <div id="response"></div>
